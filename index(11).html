@@ -1,0 +1,394 @@
+!<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Birthday Wishes 🎂</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+min-height:100vh;
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#ff69b4,#8a5cff,#00c6ff);
+background-size:300% 300%;
+animation:bg 8s infinite alternate;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:auto;
+padding:70px 0 30px;
+}
+
+@keyframes bg{
+0%{background-position:0 50%}
+100%{background-position:100% 50%}
+}
+
+.project{
+position:fixed;
+top:18px;
+width:100%;
+text-align:center;
+color:white;
+font-size:20px;
+font-weight:bold;
+text-shadow:0 3px 8px #555;
+z-index:5;
+}
+
+.card{
+width:92%;
+max-width:430px;
+background:rgba(255,255,255,.97);
+padding:25px;
+border-radius:25px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,.3);
+z-index:2;
+}
+
+h1{
+color:#ff3d9a;
+font-size:28px;
+}
+
+input[type=text],
+input[type=date]{
+width:100%;
+padding:14px;
+margin:8px 0;
+border:2px solid #ddd;
+border-radius:12px;
+font-size:16px;
+}
+
+.fotoBox{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+.fotoPilihan{
+width:50%;
+height:120px;
+border:2px dashed #c5b5ff;
+border-radius:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+background:#f7f3ff;
+cursor:pointer;
+position:relative;
+}
+
+.fotoPilihan span{
+font-size:14px;
+color:#777;
+padding:10px;
+}
+
+.fotoPilihan img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:none;
+}
+
+.fotoPilihan input{
+display:none;
+}
+
+button{
+width:100%;
+padding:15px;
+margin-top:15px;
+border:0;
+border-radius:15px;
+background:linear-gradient(90deg,#ff3d9a,#7b61ff);
+color:white;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.emoji{
+font-size:50px;
+animation:bounce 1s infinite alternate;
+}
+
+@keyframes bounce{
+from{transform:translateY(0)}
+to{transform:translateY(-10px)}
+}
+
+.nama{
+color:#7b61ff;
+font-size:30px;
+font-weight:bold;
+}
+
+#hasil{
+display:none;
+}
+
+#umur{
+color:#ff3d9a;
+font-weight:bold;
+}
+
+.ucapan{
+font-size:16px;
+line-height:1.7;
+color:#444;
+white-space:pre-line;
+}
+
+#pesan{
+margin-top:15px;
+padding:15px;
+border-radius:15px;
+background:linear-gradient(135deg,#fff0f8,#eeeaff);
+}
+
+.hasilFoto{
+width:46%;
+aspect-ratio:1/1;
+object-fit:cover;
+border-radius:18px;
+border:4px solid white;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+.fotoContainer{
+display:flex;
+justify-content:center;
+gap:10px;
+margin:15px 0;
+}
+
+.balloon{
+position:fixed;
+bottom:-80px;
+font-size:35px;
+animation:naik 7s linear infinite;
+}
+
+@keyframes naik{
+to{transform:translateY(-110vh)}
+}
+
+.confetti{
+position:fixed;
+top:-30px;
+font-size:25px;
+z-index:10;
+animation:jatuh 3s linear forwards;
+}
+
+@keyframes jatuh{
+to{transform:translateY(110vh) rotate(360deg)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="project">✨ Project Buatan Putraa ✨</div>
+
+<div class="balloon" style="left:10%;animation-delay:1s">🎈</div>
+<div class="balloon" style="left:30%;animation-delay:3s">🎈</div>
+<div class="balloon" style="left:60%;animation-delay:0s">🎈</div>
+<div class="balloon" style="left:85%;animation-delay:2s">🎈</div>
+
+<div class="card" id="form">
+
+<div class="emoji">🎂</div>
+
+<h1>Birthday Wishes ✨</h1>
+
+<p>Isi data dan pilih foto kalian berdua 💕</p>
+
+<input type="text" id="nama" placeholder="Nama orang yang ulang tahun">
+
+<input type="date" id="tanggal">
+
+<div class="fotoBox">
+
+<label class="fotoPilihan">
+<input type="file" id="foto1" accept="image/*" onchange="preview(1)">
+<span id="teks1">📷<br>Pilih Foto 1</span>
+<img id="preview1">
+</label>
+
+<label class="fotoPilihan">
+<input type="file" id="foto2" accept="image/*" onchange="preview(2)">
+<span id="teks2">📷<br>Pilih Foto 2</span>
+<img id="preview2">
+</label>
+
+</div>
+
+<button onclick="ucapkan()">
+🎉 Buat Ucapan
+</button>
+
+</div>
+
+<div class="card" id="hasil">
+
+<div class="emoji">🎂🎉</div>
+
+<h1>SELAMAT ULANG TAHUN!</h1>
+
+<div class="nama" id="namaHasil"></div>
+
+<div class="fotoContainer">
+<img id="hasilFoto1" class="hasilFoto">
+<img id="hasilFoto2" class="hasilFoto">
+</div>
+
+<p>
+Sekarang kamu berusia
+<span id="umur"></span> tahun! 🥳
+</p>
+
+<div id="pesan" class="ucapan"></div>
+
+<button onclick="location.reload()">
+🔄 Buat Ucapan Lagi
+</button>
+
+</div>
+
+<script>
+
+function preview(no){
+
+const input=document.getElementById("foto"+no);
+const img=document.getElementById("preview"+no);
+const teks=document.getElementById("teks"+no);
+
+if(input.files && input.files[0]){
+
+const reader=new FileReader();
+
+reader.onload=function(e){
+img.src=e.target.result;
+img.style.display="block";
+teks.style.display="none";
+}
+
+reader.readAsDataURL(input.files[0]);
+}
+}
+
+function ucapkan(){
+
+const nama=document.getElementById("nama").value.trim();
+const tanggal=document.getElementById("tanggal").value;
+
+const file1=document.getElementById("foto1").files[0];
+const file2=document.getElementById("foto2").files[0];
+
+if(!nama || !tanggal){
+alert("Nama dan tanggal lahir wajib diisi 😊");
+return;
+}
+
+if(!file1 || !file2){
+alert("Silakan pilih 2 foto dari galeri terlebih dahulu 📸💕");
+return;
+}
+
+const lahir=new Date(tanggal);
+const sekarang=new Date();
+
+let umur=sekarang.getFullYear()-lahir.getFullYear();
+
+const bulan=sekarang.getMonth()-lahir.getMonth();
+
+if(
+bulan<0 ||
+(bulan===0 && sekarang.getDate()<lahir.getDate())
+){
+umur--;
+}
+
+const pesan=[
+
+`🎉 Selamat ulang tahun, ${nama}! 🎂
+
+Semoga di usia yang baru ini kamu semakin bahagia, semakin kuat, dan semakin dekat dengan semua impianmu.
+
+Semoga setiap langkahmu dipenuhi hal-hal baik, orang-orang baik, dan cerita indah yang akan selalu kamu ingat.
+
+Jangan pernah berhenti percaya pada dirimu sendiri. Teruslah berusaha dan kejar semua impianmu. ✨💖`,
+
+`🌟 Happy Birthday, ${nama}! 🌟
+
+Hari ini adalah hari yang sangat spesial karena kamu sedang memulai babak baru dalam hidupmu.
+
+Semoga tahun ini membawa banyak kebahagiaan, kesehatan, keberuntungan, dan kesempatan baru.
+
+Semoga semua doa baikmu perlahan menjadi kenyataan. Tetap tersenyum dan terus bersinar! 💐✨`,
+
+`🥳 Selamat ulang tahun, ${nama}! 🥳
+
+Semoga hari spesialmu dipenuhi senyum, tawa, kejutan manis, dan orang-orang yang menyayangimu.
+
+Semoga perjalanan hidupmu semakin indah dan setiap masalah yang datang bisa kamu lewati dengan kuat.
+
+Semoga satu per satu impianmu terwujud. Nikmati hari spesialmu karena kamu pantas mendapatkan kebahagiaan. 💕🎂`
+
+];
+
+const random=Math.floor(Math.random()*pesan.length);
+
+document.getElementById("namaHasil").innerText=nama;
+document.getElementById("umur").innerText=umur;
+document.getElementById("pesan").innerText=pesan[random];
+
+document.getElementById("hasilFoto1").src=
+URL.createObjectURL(file1);
+
+document.getElementById("hasilFoto2").src=
+URL.createObjectURL(file2);
+
+document.getElementById("form").style.display="none";
+document.getElementById("hasil").style.display="block";
+
+confetti();
+}
+
+function confetti(){
+
+for(let i=0;i<40;i++){
+
+const c=document.createElement("div");
+
+c.className="confetti";
+
+c.innerText=[
+"🎉","✨","💖","🎈","🥳","⭐","🎊"
+][Math.floor(Math.random()*7)];
+
+c.style.left=Math.random()*100+"vw";
+c.style.animationDelay=Math.random()*1.5+"s";
+
+document.body.appendChild(c);
+
+setTimeout(()=>{
+c.remove();
+},4500);
+
+}
+}
+
+</script>
+
+</body>
+</html>
